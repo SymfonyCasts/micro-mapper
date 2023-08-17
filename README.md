@@ -4,10 +4,16 @@ Need to map one object (e.g. a Doctrine entity) to another
 object (e.g. a DTO) and love writing the mapping code manually?
 Then this library is for you!
 
+Define a "mapper" class:
+
+```php
+TODO
+```
+
+Then... map!
+
 ```php
 $dragon = $dragonRepository->find(1);
-
-// YOU write the mapping code in a "mapper" class (shown later)
 $dragonDTO = $microMapper->map($dragon, DragonDTO::class);
 ```
 
@@ -40,3 +46,6 @@ in our [Api Platform EP3 Tutorial](https://symfonycasts.com/screencast/api-platf
 To do this, create a "mapper" class that defines how to map:
 
 TODO
+
+- property accessor for doctrine relations
+- nested objects
