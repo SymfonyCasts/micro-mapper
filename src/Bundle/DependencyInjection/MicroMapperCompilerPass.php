@@ -14,7 +14,7 @@ use Symfonycasts\MicroMapper\MapperConfig;
  */
 class MicroMapperCompilerPass implements CompilerPassInterface
 {
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         $mapperConfigDefinitions = [];
         foreach ($container->findTaggedServiceIds('micro_mapper.mapper') as $id => $tags) {

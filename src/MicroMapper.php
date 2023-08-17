@@ -15,8 +15,13 @@ class MicroMapper implements MicroMapperInterface
     /**
      * @param MapperConfig[] $mapperConfigs
      */
-    public function __construct(private array $mapperConfigs)
+    public function __construct(private array $mapperConfigs = [])
     {
+    }
+
+    public function addMapperConfig(MapperConfig $mapperConfig): void
+    {
+        $this->mapperConfigs[] = $mapperConfig;
     }
 
     public function map(object $from, string $toClass, array $context = []): object

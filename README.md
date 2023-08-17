@@ -7,7 +7,32 @@ Then this library is for you!
 Define a "mapper" class:
 
 ```php
-TODO
+use App\Entity\Dragon;
+use App\DTO\DragonDTO;
+
+#[AsMapper(from: Dragon::class, to: DragonDTO::class)]
+class DragonEntityToDtoMapper implements MapperInterface
+{
+    public function init(object $from, string $toClass, array $context): object
+    {
+        $entity = $from;
+        $dto = new DragonDTO();
+        $dto->id = $entity->getId();
+        
+        return $dto;
+    }
+
+    public function populate(object $from, object $to, array $context): object
+    {
+        $dto = $from;
+        $entity = $to;
+
+        $dto->name = $entity->getName();
+        $dto->firePower = $entity->getFirePower();
+
+        return $entity;
+    }
+}
 ```
 
 Then... map!
@@ -18,7 +43,7 @@ $dragonDTO = $microMapper->map($dragon, DragonDTO::class);
 ```
 
 MicroMapper is similar to other data mappers, like
-[jane-php/automapper](https://github.com/janephp/automapper), except less
+[jane-php/automapper](https://github.com/janephp/automapper), except... less
 impressive! Jane's Automapper is awesome and handles a lot of heavy lifting.
 With MicroMapper, *you* do the heavy lifting. Let's review with a table!
 
@@ -49,3 +74,4 @@ TODO
 
 - property accessor for doctrine relations
 - nested objects
+- manual setup

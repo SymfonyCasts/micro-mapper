@@ -18,7 +18,7 @@ class SymfonycastsMicroMapperBundle extends Bundle
         return new MicroMapperExtension();
     }
 
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         $container->addCompilerPass(new MicroMapperCompilerPass());
     }
