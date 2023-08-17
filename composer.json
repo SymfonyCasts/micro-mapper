@@ -1,0 +1,33 @@
+{
+    "name": "symfonycasts/micro-mapper",
+    "description": "A tiny, underwhelming data mapper to map one object to another!",
+    "license": "MIT",
+    "type": "library",
+    "keywords": ["data-mapper"],
+    "authors": [
+        {
+            "name": "Ryan Weaver",
+            "homepage": "https://symfonycasts.com"
+        }
+    ],
+    "require": {
+        "php": ">=8.1"
+    },
+    "require-dev": {
+        "symfony/filesystem": "^6.3",
+        "symfony/framework-bundle": "^6.3",
+        "symfony/phpunit-bridge": "^6.3",
+        "phpstan/phpstan": "1.11.x-dev"
+    },
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Symfonycasts\\MicroMapper\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Symfonycasts\\MicroMapper\\Tests\\": "tests/"
+        }
+    }
+}
