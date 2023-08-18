@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the SymfonyCasts MicroMapper package.
+ * Copyright (c) SymfonyCasts <https://symfonycasts.com/>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Symfonycasts\MicroMapper;
 
 /**
@@ -26,7 +33,7 @@ class MicroMapper implements MicroMapperInterface
 
     public function map(object $from, string $toClass, array $context = []): object
     {
-        $this->currentDepth++;
+        ++$this->currentDepth;
 
         if ($this->currentDepth > 50) {
             throw new \Exception('Max depth reached');
@@ -41,19 +48,16 @@ class MicroMapper implements MicroMapperInterface
             $this->maxDepth = $context[self::MAX_DEPTH] + $this->currentDepth;
         }
 
-        $shouldFullyPopulate = $this->maxDepth === null || $this->currentDepth < $this->maxDepth;
+        $shouldFullyPopulate = null === $this->maxDepth || $this->currentDepth < $this->maxDepth;
 
         // watch for circular references, but only if we're fully populating
         // if we are not fully populating, this is already the final depth/level
         // through the micro mapper.
         if (isset($this->objectHashes[spl_object_hash($from)]) && $shouldFullyPopulate) {
-            throw new \Exception(sprintf(
-                'Circular reference detected with micro mapper: %s. Try passing [MicroMapperInterface::MAX_DEPTH => 1] when mapping relationships.',
-                implode(' -> ', array_merge($this->objectHashes, [get_class($from)]))
-            ));
+            throw new \Exception(sprintf('Circular reference detected with micro mapper: %s. Try passing [MicroMapperInterface::MAX_DEPTH => 1] when mapping relationships.', implode(' -> ', array_merge($this->objectHashes, [$from::class]))));
         }
 
-        $this->objectHashes[spl_object_hash($from)] = get_class($from);
+        $this->objectHashes[spl_object_hash($from)] = $from::class;
 
         foreach ($this->mapperConfigs as $mapperConfig) {
             if (!$mapperConfig->supports($from, $toClass)) {
@@ -63,17 +67,17 @@ class MicroMapper implements MicroMapperInterface
             $toObject = $mapperConfig->getMapper()->load($from, $toClass, $context);
 
             // avoid fully populated objects if max depth is reached
-            if ($this->maxDepth === null || $this->currentDepth < $this->maxDepth) {
+            if (null === $this->maxDepth || $this->currentDepth < $this->maxDepth) {
                 $mapperConfig->getMapper()->populate($from, $toObject, $context);
             }
 
             unset($this->objectHashes[spl_object_hash($from)]);
-            $this->currentDepth--;
+            --$this->currentDepth;
             $this->maxDepth = $previousMaxDepth;
 
             return $toObject;
         }
 
-        throw new \Exception(sprintf('No mapper found for %s -> %s', get_class($from), $toClass));
+        throw new \Exception(sprintf('No mapper found for %s -> %s', $from::class, $toClass));
     }
 }

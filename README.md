@@ -1,7 +1,7 @@
-# MicroMapper: The Tiny, Underwhelming Data Mapper
+# MicroMapper: The Tiny, Underwhelming Data Mapper for Symfony!
 
 Need to map one object (e.g. a Doctrine entity) to another
-object (e.g. a DTO) and love writing the mapping code manually?
+object (e.g. a DTO) and *love* writing the mapping code manually?
 Then this library is for you!
 
 Define a "mapper" class:
@@ -50,15 +50,15 @@ With MicroMapper, *you* do the heavy lifting. Let's review with a table!
 | Some of the mapping is automatic | ❌           | ✅                 |
 | Extensible                       | ✅           | ✅                 |
 | Handles nested objects           | ✅           | ✅                 |
-| Small & Dead-simple              | ✅           | (not SO simple    |
+| Small & Dead-simple              | ✅           | (not SO simple)   |
 
-## Support Us & Symfony
+## Support us & Symfony
 
-Finding this package useful! We're *thrilled* 😍!
+Is this package useful! We're *thrilled* 😍!
 
 A lot of time & effort from the Symfonycasts team & the Symfony community
-goes into creating and maintaining these packages. You can support us and
-Symfony by grabbing a subscription to [SymfonyCasts](https://symfonycasts.com)!
+goes into creating and maintaining these packages. You can support us +
+Symfony (and learn a bucket-load) by grabbing a subscription to [SymfonyCasts](https://symfonycasts.com)!
 
 ## Installation
 

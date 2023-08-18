@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the SymfonyCasts MicroMapper package.
+ * Copyright (c) SymfonyCasts <https://symfonycasts.com/>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Symfonycasts\MicroMapper\Tests;
 
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -21,7 +28,7 @@ class IntegrationTest extends KernelTestCase
         $region->dinosaurs = [$dinosaur1];
 
         $microMapper = self::getContainer()->get('public.micro_mapper');
-        assert($microMapper instanceof MicroMapperInterface);
+        \assert($microMapper instanceof MicroMapperInterface);
         $dto = $microMapper->map($region, DinoRegionDto::class);
         $this->assertInstanceOf(DinoRegionDto::class, $dto);
         $this->assertSame(1, $dto->id);

@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the SymfonyCasts MicroMapper package.
+ * Copyright (c) SymfonyCasts <https://symfonycasts.com/>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Symfonycasts\MicroMapper\Bundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\Argument\ServiceClosureArgument;
@@ -22,7 +29,7 @@ class MicroMapperCompilerPass implements CompilerPassInterface
                 $mapperConfigDefinitions[] = new Definition(MapperConfig::class, [
                     $tag['from'],
                     $tag['to'],
-                    new ServiceClosureArgument(new Reference($id))
+                    new ServiceClosureArgument(new Reference($id)),
                 ]);
             }
         }

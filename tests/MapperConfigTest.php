@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the SymfonyCasts MicroMapper package.
+ * Copyright (c) SymfonyCasts <https://symfonycasts.com/>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Symfonycasts\MicroMapper\Tests;
 
 use PHPUnit\Framework\TestCase;
@@ -15,7 +22,7 @@ class MapperConfigTest extends TestCase
         $config = new MapperConfig(
             fromClass: DinoRegion::class,
             toClass: DinoRegionDto::class,
-            mapper: fn() => $this->createMock(MapperInterface::class),
+            mapper: fn () => $this->createMock(MapperInterface::class),
         );
 
         $this->assertTrue($config->supports(new DinoRegion(), DinoRegionDto::class));
@@ -30,7 +37,7 @@ class MapperConfigTest extends TestCase
         $config = new MapperConfig(
             fromClass: DinoRegion::class,
             toClass: DinoRegionDto::class,
-            mapper: fn() => $mockMapper,
+            mapper: fn () => $mockMapper,
         );
 
         $this->assertSame($mockMapper, $config->getMapper());

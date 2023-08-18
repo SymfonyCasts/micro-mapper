@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the SymfonyCasts MicroMapper package.
+ * Copyright (c) SymfonyCasts <https://symfonycasts.com/>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Symfonycasts\MicroMapper\Tests\fixtures;
 
 use Symfonycasts\MicroMapper\AsMapper;
@@ -11,7 +18,6 @@ class DinosaurToDtoMapper implements MapperInterface
 {
     public function __construct(private MicroMapperInterface $microMapper)
     {
-
     }
 
     public function load(object $from, string $toClass, array $context): object
@@ -24,8 +30,8 @@ class DinosaurToDtoMapper implements MapperInterface
 
     public function populate(object $from, object $to, array $context): object
     {
-        assert($from instanceof Dinosaur);
-        assert($to instanceof DinosaurDto);
+        \assert($from instanceof Dinosaur);
+        \assert($to instanceof DinosaurDto);
 
         $to->genus = $from->genus;
         $to->species = $from->species;

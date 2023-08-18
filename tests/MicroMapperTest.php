@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the SymfonyCasts MicroMapper package.
+ * Copyright (c) SymfonyCasts <https://symfonycasts.com/>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Symfonycasts\MicroMapper\Tests;
 
 use PHPUnit\Framework\TestCase;
@@ -58,12 +65,12 @@ class MicroMapperTest extends TestCase
         $microMapper->addMapperConfig(new MapperConfig(
             DinoRegion::class,
             DinoRegionDto::class,
-            fn() => new DinoRegionToDtoMapper($microMapper)
+            fn () => new DinoRegionToDtoMapper($microMapper)
         ));
         $microMapper->addMapperConfig(new MapperConfig(
             Dinosaur::class,
             DinosaurDto::class,
-            fn() => new DinosaurToDtoMapper($microMapper)
+            fn () => new DinosaurToDtoMapper($microMapper)
         ));
 
         return $microMapper;
