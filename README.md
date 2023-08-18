@@ -342,9 +342,9 @@ DragonApi:
 
 * `MAX_DEPTH = 1`: The `Dragon` entity will be *fully* mapped to a
   `DragonApi` object: both the `load()` and `populate()` methods will be
-  called on its mapper like normal. However, when each `Dragon` in the
+  called on its mapper like normal. However, when each `Treasure` in
   `Dragon.treasures` is mapped to a `TreasureApi` object, this will be
-  "shallow": e.g. the `TreasureApi` object will have an `id` property but
+  "shallow": the `TreasureApi` object will have an `id` property but
   no other data (because the max depth was hit and so only `load()` is called
   on `TreasureEntityToApiMapper`).
 
@@ -379,16 +379,17 @@ extra mapping work.
 In our example, the `Dragon` entity has a `treasures` property that is a
 `OneToMany` relation to the `Treasure` entity. Our DTO classes have
 the same relation: `DragonApi` holds an array of `TreasureApi` objects.
+Those greedy dragons!
 
 If you want to map a `DragonApi` object to the `Dragon` entity and
 the `DragonApi.treasures` property may have changed, you need to
-to do this carefully. For example, this will not save correctly:
+update the `Dragon.treasures` properly carefully.
+
+For example, this will **not work**:
 
 ```php
 
 // ...
-use App\ApiResource\TreasureApi;
-use Symfonycasts\MicroMapper\MicroMapperInterface;
 
 #[AsMapper(from: DragonApi::class, to: Dragon::class)]
 class DragonApiToEntityMapper implements MapperInterface
@@ -404,7 +405,7 @@ class DragonApiToEntityMapper implements MapperInterface
         $treasureEntities = new ArrayCollection();
         foreach ($dto->treasures as $treasureApi) {
             $treasureEntities[] = $this->microMapper->map($treasureApi, Treasure::class, [
-                // depth=0 because we really just need to load/query each Treasure
+                // depth=0 because we really just need to load/query each Treasure entity
                 MicroMapperInterface::MAX_DEPTH => 0,
             ]);
         }
@@ -418,7 +419,7 @@ class DragonApiToEntityMapper implements MapperInterface
 ```
 
 The problem is with the `$entity->setTreasures()` call. In fact, this method probably
-doesn't even exist on the `Dragon` entity! Instead you have `addTreasure()` and
+doesn't even exist on the `Dragon` entity! Instead, it likely has `addTreasure()` and
 `removeTreasure()` methods and *these* must be called instead so that the "owning"
 side of the Doctrine relationship is correctly set (otherwise the changes won't save).
 
@@ -462,7 +463,7 @@ class DragonApiToEntityMapper implements MapperInterface
 }
 ```
 
-## Stand-alone Library Setup
+## Standalone Library Setup
 
 If you're not using Symfony, you can still use MicroMapper! You'll need to
 instantiate the `MicroMapper` class and pass it all of your mappings:
