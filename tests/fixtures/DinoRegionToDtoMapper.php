@@ -14,7 +14,7 @@ class DinoRegionToDtoMapper implements MapperInterface
 
     }
 
-    public function init(object $from, string $toClass, array $context): object
+    public function load(object $from, string $toClass, array $context): object
     {
         $dto = new $toClass();
         $dto->id = $from->id;

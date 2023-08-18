@@ -11,7 +11,7 @@ namespace Symfonycasts\MicroMapper;
  */
 interface MapperInterface
 {
-    public function init(object $from, string $toClass, array $context): object;
+    public function load(object $from, string $toClass, array $context): object;
 
     public function populate(object $from, object $to, array $context): object;
 }
