@@ -317,7 +317,7 @@ When the max depth is hit, the `load()` method will be called on the mapper
 for that level but `populate()` will *not* be called. This results in a
 "shallow" mapping of the final level object.
 
-Let's look at a few depth examples using using this code:
+Let's look at a few depth examples using this code:
 
 ```php
 $dto->dragon = $this->microMapper->map($dragonEntity, DragonApi::class, [
@@ -332,8 +332,8 @@ $dto->dragon = $this->microMapper->map($dragonEntity, DragonApi::class, [
 
 Result:
 
-```
-DragonApi
+```yaml
+DragonApi:
     id: 1
     name: null
     firePower: null
@@ -350,23 +350,22 @@ DragonApi
 
 Result:
 
-```
-DragonApi
+```yaml
+DragonApi:
     id: 1
     name: 'Sizzley Pete'
     firePower: 100
-    treasures: [
-        TreasureApi
+    treasures:
+        TreasureApi:
             id: 1
             name: null
             value: null
             dragon: null
-        TreasureApi
+        TreasureApi:
             id: 2
             name: null
             value: null
             dragon: null
-    ]
 ```
 
 In something like API Platform, you can also use `MAX_DEPTH` to limit the
