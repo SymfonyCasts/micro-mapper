@@ -125,7 +125,7 @@ The mapper class has three parts:
 
 ### Step 2: Use The MicroMapper Service
 
-To use the mapper, you need to fetch the `MicroMapperInterface` service. For
+To use the mapper, you can fetch the `MicroMapperInterface` service. For
 example, from a controller:
 
 ```php
@@ -152,16 +152,17 @@ class DragonController extends AbstractController
 
 ## Reverse Transforming
 
-If you want to do the reverse transformation: `DragonApi` to `Dragon`, it's
-the same process: create a mapper class and use the `MicroMapperInterface`.
+To do the reverse transformation - `DragonApi` to `Dragon` - it's
+the same process: create a mapper class:
 
 The mapper:
 
 ```php
 namespace App\Mapper;
 
-use App\Entity\Dragon;
 use App\ApiResource\DragonApi;
+use App\Entity\Dragon;
+use App\Repository\DragonRepository;
 use Symfonycasts\MicroMapper\AsMapper;
 use Symfonycasts\MicroMapper\MapperInterface;
 
@@ -201,7 +202,7 @@ database if it has an `id` property.
 ## Handling Nested Objects
 
 If you have nested objects, you can use the `MicroMapperInterface` to map
-those too. For example, suppose the `Dragon` entity has a `treasures` property
+those too. Suppose the `Dragon` entity has a `treasures` property
 that is a `OneToMany` relation to `Treasure` entity. And in `DragonApi`, we have
 a `treasures` property that should hold an array of `TreasureApi` objects.
 
@@ -230,7 +231,7 @@ class TreasureEntityToApiMapper implements MapperInterface
 }
 ```
 
-Then, in the `DragonEntityToApiMapper`, use the `MicroMapperInterface` to map the
+Next, in the `DragonEntityToApiMapper`, use the `MicroMapperInterface` to map the
 `Treasure` objects to `TreasureApi` objects:
 
 ```php
@@ -256,8 +257,8 @@ class DragonEntityToApiMapper implements MapperInterface
         // ... other properties
 
         $treasuresApis = [];
-        foreach ($entity->getTreasures() as $treasure) {
-            $treasuresApis[] = $this->microMapper->map($treasure, TreasureApi::class, [
+        foreach ($entity->getTreasures() as $treasureEntity) {
+            $treasuresApis[] = $this->microMapper->map($treasureEntity, TreasureApi::class, [
                 MicroMapperInterface::MAX_DEPTH => 1,
             ]);
         }
@@ -303,35 +304,71 @@ class TreasureEntityToApiMapper implements MapperInterface
 }
 ```
 
-This creates a circular reference: `DragonApi` has a `treasures` property
-that we map to an array of `TreasureApi` objects. And each `TreasureApi`
-object has a `dragon` property that we map to a `DragonApi` object.
-If we're not careful, the micro mapper will go into an infinite loop
-and become self-aware.
+This creates a circular reference: the `Dragon` entity is mapped to a
+`DragonApi` object... which then maps its `treasures` property to an array
+of `TreasureApi` objects... which then each map their `dragon` property to a
+`DragonApi` object... forever... and ever... and ever...
 
-Thankfully, the `MAX_DEPTH` option tells MicroMapper how many levels deep to
+The `MAX_DEPTH` option tells MicroMapper how many levels deep to
 go when mapping, and you *usually* want to set this to 0 or 1 when mapping a
 relation.
 
 When the max depth is hit, the `load()` method will be called on the mapper
 for that level but `populate()` will *not* be called. This results in a
-"shallow" mapping of the object.
+"shallow" mapping of the final level object.
 
-To understand this, let's look at a few depth examples:
+Let's look at a few depth examples using using this code:
 
-* `MAX_DEPTH = 0`: Because the depth is immediately hit, the `Dragon` object
+```php
+$dto->dragon = $this->microMapper->map($dragonEntity, DragonApi::class, [
+    MicroMapperInterface::MAX_DEPTH => ???,
+]);
+```
+
+* `MAX_DEPTH = 0`: Because the depth is immediately hit, the `Dragon` entity
   will be mapped to a `DragonApi` object by calling the `load()` method on
   `DragonEntityToApiMapper`. But the `populate()` method will *not* be called.
-  This means that each `DragonApi` object will have an `id` but no other data.
+  This means that the final `DragonApi` object will have an `id` but no other data.
 
-* `MAX_DEPTH = 1`: The `Dragon` object will be *fully* mapped to a
+Result:
+
+```
+DragonApi
+    id: 1
+    name: null
+    firePower: null
+    treasures: []
+```
+
+* `MAX_DEPTH = 1`: The `Dragon` entity will be *fully* mapped to a
   `DragonApi` object: both the `load()` and `populate()` methods will be
-  called on its mapper. However, when `DragonEntityToApiMapper` calls the
-  `MicroMapperInterface` service to map each `Treasure` object to a
-  `TreasureApi` object, that mapping will be *shallow* - e.g. the `TreasureApi`
-  object will have an `id` property but no other data (because the max depth
-  was hit and so only `load()` is called on `TreasureEntityToApiMapper`).
-  
+  called on its mapper like normal. However, when each `Dragon` in the
+  `Dragon.treasures` is mapped to a `TreasureApi` object, this will be
+  "shallow": e.g. the `TreasureApi` object will have an `id` property but
+  no other data (because the max depth was hit and so only `load()` is called
+  on `TreasureEntityToApiMapper`).
+
+Result:
+
+```
+DragonApi
+    id: 1
+    name: 'Sizzley Pete'
+    firePower: 100
+    treasures: [
+        TreasureApi
+            id: 1
+            name: null
+            value: null
+            dragon: null
+        TreasureApi
+            id: 2
+            name: null
+            value: null
+            dragon: null
+    ]
+```
+
 In something like API Platform, you can also use `MAX_DEPTH` to limit the
 depth of the serialization for performance. For example, if the `TreasureApi`
 object has a `dragon` property that is expressed as the IRI string (e.g.
