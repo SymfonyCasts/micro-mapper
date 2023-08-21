@@ -22,17 +22,17 @@ namespace Symfonycasts\MicroMapper;
 interface MapperInterface
 {
     /**
-     * @param TFrom $from
+     * @param TFrom             $from
      * @param class-string<TTo> $toClass
-     * @param array $context
+     *
      * @return TTo
      */
     public function load(object $from, string $toClass, array $context): object;
 
     /**
      * @param TFrom $from
-     * @param TTo $to
-     * @param array $context
+     * @param TTo   $to
+     *
      * @return TTo
      */
     public function populate(object $from, object $to, array $context): object;
