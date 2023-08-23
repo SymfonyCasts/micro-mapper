@@ -22,6 +22,11 @@ namespace Symfonycasts\MicroMapper;
 interface MapperInterface
 {
     /**
+     * Load the "to object" and return it.
+     *
+     * This method should load (e.g. from the database) or instantiate the "to object".
+     * Avoid populating any properties except for an identifier.
+     *
      * @param TFrom             $from
      * @param class-string<TTo> $toClass
      *
@@ -30,6 +35,10 @@ interface MapperInterface
     public function load(object $from, string $toClass, array $context): object;
 
     /**
+     * Populate the data onto the "to object" from the "from object".
+     *
+     * Receives the "to object" returned from load().
+     *
      * @param TFrom $from
      * @param TTo   $to
      *

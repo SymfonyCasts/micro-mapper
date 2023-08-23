@@ -68,7 +68,7 @@ class MicroMapper implements MicroMapperInterface
 
             // avoid fully populated objects if max depth is reached
             if (null === $this->maxDepth || $this->currentDepth < $this->maxDepth) {
-                $mapperConfig->getMapper()->populate($from, $toObject, $context);
+                $toObject = $mapperConfig->getMapper()->populate($from, $toObject, $context);
             }
 
             unset($this->objectHashes[spl_object_hash($from)]);
