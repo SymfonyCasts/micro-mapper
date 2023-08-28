@@ -78,6 +78,10 @@ class MicroMapper implements MicroMapperInterface
             return $toObject;
         }
 
+        $this->objectHashes = [];
+        $this->currentDepth = 0;
+        $this->maxDepth = null;
+
         throw new \Exception(sprintf('No mapper found for %s -> %s', $from::class, $toClass));
     }
 }

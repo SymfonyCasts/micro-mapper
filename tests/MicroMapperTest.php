@@ -22,13 +22,8 @@ use Symfonycasts\MicroMapper\Tests\fixtures\DinosaurToDtoMapper;
 
 class MicroMapperTest extends TestCase
 {
-    // calls correct mapper
-    // respects MAX_DEPTH (and only calls init)
-    // throws on circular reference
-
     public function testMap()
     {
-        $this->createMapper();
         $region = new DinoRegion();
         $region->id = 1;
         $region->name = 'North America';
@@ -40,7 +35,8 @@ class MicroMapperTest extends TestCase
         $dinosaur2->region = $region;
         $region->dinosaurs = [$dinosaur1, $dinosaur2];
 
-        $dto = $this->createMapper()->map($region, DinoRegionDto::class);
+        $mapper = $this->createMapper();
+        $dto = $mapper->map($region, DinoRegionDto::class);
         $this->assertInstanceOf(DinoRegionDto::class, $dto);
         $this->assertSame(1, $dto->id);
         $this->assertSame('North America', $dto->name);
@@ -57,6 +53,10 @@ class MicroMapperTest extends TestCase
         // the deep will have a region, but it will be shallow
         $this->assertSame($dto->dinosaursMappedDeep[0]->region->id, 1);
         $this->assertNull($dto->dinosaursMappedDeep[0]->region->name);
+
+        $reflectionObject = new \ReflectionObject($mapper);
+        $objectHashesProperty = $reflectionObject->getProperty('objectHashes');
+        $this->assertEmpty($objectHashesProperty->getValue($mapper));
     }
 
     private function createMapper(): MicroMapperInterface
