@@ -22,13 +22,13 @@ class DragonEntityToDtoMapper implements MapperInterface
 
     public function populate(object $from, object $to, array $context): object
     {
-        $dto = $from;
-        $entity = $to;
+        $entity = $from;
+        $dto = $to;
 
         $dto->name = $entity->getName();
         $dto->firePower = $entity->getFirePower();
 
-        return $entity;
+        return $dto;
     }
 }
 ```
@@ -100,16 +100,16 @@ class DragonEntityToApiMapper implements MapperInterface
 
     public function populate(object $from, object $to, array $context): object
     {
-        $dto = $from;
-        $entity = $to;
+        $entity = $from;
+        $dto = $to;
         // helps your editor know the types
-        assert($dto instanceof DragonApi);
         assert($entity instanceof Dragon);
+        assert($dto instanceof DragonApi);
 
         $dto->name = $entity->getName();
         $dto->firePower = $entity->getFirePower();
 
-        return $entity;
+        return $dto;
     }
 }
 ```
@@ -123,7 +123,7 @@ The mapper class has three parts:
 3. `populate()` method: populates the "to" object with data from the "from"
     object.
 
-### Step 2: Use The MicroMapper Service
+### Step 2: Use the MicroMapper Service
 
 To use the mapper, you can fetch the `MicroMapperInterface` service. For
 example, from a controller:
@@ -134,6 +134,7 @@ example, from a controller:
 namespace App\Controller;
 
 use App\Entity\Dragon;
+use App\ApiResource\DragonApi;
 use Symfonycasts\MicroMapper\MicroMapperInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -226,7 +227,7 @@ class TreasureEntityToApiMapper implements MapperInterface
 
         // ... map all the properties
 
-        return $entity;
+        return $dto;
     }
 }
 ```
@@ -264,7 +265,7 @@ class DragonEntityToApiMapper implements MapperInterface
         }
         $dto->treasures = $treasuresApis;
 
-        return $entity;
+        return $dto;
     }
 }
 ```
@@ -299,7 +300,7 @@ class TreasureEntityToApiMapper implements MapperInterface
             MicroMapperInterface::MAX_DEPTH => 1,
         ]);
 
-        return $entity;
+        return $dto;
     }
 }
 ```
