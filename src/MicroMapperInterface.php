@@ -11,16 +11,14 @@ namespace Symfonycasts\MicroMapper;
 
 /**
  * Maps one object to another using the configured mappers.
- *
- * @template TFrom of object
- * @template TTo of object
  */
 interface MicroMapperInterface
 {
     public const MAX_DEPTH = 'max_depth';
 
     /**
-     * @param TFrom             $from
+     * @template TTo of object
+     *
      * @param class-string<TTo> $toClass
      *
      * @return TTo
