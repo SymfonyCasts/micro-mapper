@@ -1,0 +1,67 @@
+---------------------------------------------------------------------------
+
+by bendavies at 2023-09-29T14:05:33Z
+
+@weaverryan i don't think these are my failures
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2023-09-29T14:42:18Z
+
+Hmm, actually, I think they are... it's related to deprecations in PHPStan - so my guess is from the new test. But these are "Other deprecation notices"... are those direct? Indirect? I'm actually not sure - we might need to tweak our `SYMFONY_DEPRECATIONS_HELPER`... or figure out the underlying cause of this.
+
+---------------------------------------------------------------------------
+
+by stof at 2023-09-29T15:25:22Z
+
+I guess they are not classified properly because the deprecation is triggered from a class defined inside a phar, so it path has starts with `phar://`, which means it does not start with the absolute path of the vendor folder. I don't find it unexpected that we did not though of the case of phars in the vendor folder in that detection logic.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2023-10-18T13:15:34Z
+
+I wonder if changing the phpstan dependency to the stable 1.10 in composer.json would help (I can't remember why I have 1.11-dev - probably by accident).
+
+---------------------------------------------------------------------------
+
+by bendavies at 2023-10-18T13:29:36Z
+
+doesn't help. but i tried using phpunit directly instead of (not-so-)simple-phpunit, and there are no deprecations.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2023-10-18T13:32:12Z
+
+> doesn't help. but i tried using phpunit directly instead of (not-so-)simple-phpunit, and there are no deprecations
+
+Yes, but probably just because it's hiding the deprecations :p. Maybe we can just generate and point to a baseline file for these deprecations - https://symfony.com/doc/current/components/phpunit_bridge.html#baseline-deprecations
+
+---------------------------------------------------------------------------
+
+by bendavies at 2023-10-18T13:36:45Z
+
+done
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2023-10-18T13:45:12Z
+
+Still not happy - not sure why - phpunit-bridge can be pesky to work with and configure. BUT, I have changed the settings so that if you push, the CI will run automatically vs waiting for my approval 🙃
+
+---------------------------------------------------------------------------
+
+by bendavies at 2023-10-18T13:53:48Z
+
+oh yeah, it's hard coded paths in the allowed deprations
+
+---------------------------------------------------------------------------
+
+by bendavies at 2023-10-18T14:08:03Z
+
+can't see the issue atm. there are deprecations in ci that i don't get locally.
+
+---------------------------------------------------------------------------
+
+by bendavies at 2023-10-18T15:20:02Z
+
+hallelujah
