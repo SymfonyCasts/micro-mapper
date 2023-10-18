@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Symfonycasts\MicroMapper\Tests;
+namespace Symfonycasts\MicroMapper\Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
 use Symfonycasts\MicroMapper\MapperConfig;

@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Symfonycasts\MicroMapper\Tests;
+namespace Symfonycasts\MicroMapper\Tests\Functional;
 
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfonycasts\MicroMapper\MicroMapperInterface;
