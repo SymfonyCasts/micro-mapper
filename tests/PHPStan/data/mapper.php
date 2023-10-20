@@ -9,17 +9,18 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-use Symfonycasts\MicroMapper\MapperInterface;
+use Symfonycasts\MicroMapper\Tests\fixtures\Dinosaur;
 use Symfonycasts\MicroMapper\Tests\fixtures\DinosaurDto;
+use Symfonycasts\MicroMapper\Tests\fixtures\DinosaurToDtoMapper;
 
 use function PHPStan\Testing\assertType;
 
-function doMapperInterfaceLoad(MapperInterface $microMapper): void
+function doMapperInterfaceLoad(DinosaurToDtoMapper $dinosaurMapper, Dinosaur $dinosaur): void
 {
-    assertType(DinosaurDto::class, $microMapper->load(new \stdClass(), DinosaurDto::class));
+    assertType(DinosaurDto::class, $dinosaurMapper->load($dinosaur, []));
 }
 
-function doMapperInterfacePopulate(MapperInterface $microMapper, DinosaurDto $dto): void
+function doMapperInterfacePopulate(DinosaurToDtoMapper $dinosaurMapper, Dinosaur $dinosaur, DinosaurDto $dto): void
 {
-    assertType(DinosaurDto::class, $microMapper->populate(new \stdClass(), $dto));
+    assertType(DinosaurDto::class, $dinosaurMapper->populate($dinosaur, $dto, []));
 }
