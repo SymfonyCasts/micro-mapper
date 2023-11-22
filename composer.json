@@ -19,6 +19,7 @@
         "symfony/phpunit-bridge": "^6.3|^7.0",
         "phpstan/phpstan": "^1.10.39"
     },
+    "minimum-stability": "dev",
     "autoload": {
         "psr-4": {
             "Symfonycasts\\MicroMapper\\": "src"
