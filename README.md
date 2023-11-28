@@ -495,4 +495,3 @@ In this case, the `#[AsMapper]` attribute is not needed.
 ## License
 
 MIT License (MIT): see the [License File](LICENSE.md) for more details.
-
