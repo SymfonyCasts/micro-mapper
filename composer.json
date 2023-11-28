@@ -14,11 +14,12 @@
         "php": ">=8.1"
     },
     "require-dev": {
-        "symfony/filesystem": "^6.3",
-        "symfony/framework-bundle": "^6.3",
-        "symfony/phpunit-bridge": "^6.3",
+        "symfony/filesystem": "^6.3|^7.0",
+        "symfony/framework-bundle": "^6.3|^7.0",
+        "symfony/phpunit-bridge": "^6.3|^7.0",
         "phpstan/phpstan": "^1.10.39"
     },
+    "minimum-stability": "dev",
     "autoload": {
         "psr-4": {
             "Symfonycasts\\MicroMapper\\": "src"
