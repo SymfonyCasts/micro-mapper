@@ -1,4 +1,4 @@
-%_PHPStan_2956cf7f1%
+%^Method "_PHPStan_%
 %^Method "PhpParser\\NodeVisitor\:\:leaveNode\(\)" might add "int\|Node\|array\|null" as a native return type declaration in the future\. Do the same in implementation "PHPStan\\BetterReflection\\SourceLocator\\SourceStubber\\PhpStormStubs\\CachingVisitor" now to avoid errors or add an explicit @return annotation to suppress this message\.$%
 %^Method "PhpParser\\NodeVisitor\:\:enterNode\(\)" might add "int\|Node\|null" as a native return type declaration in the future\. Do the same in implementation "PhpParser\\NodeVisitorAbstract@anonymous" now to avoid errors or add an explicit @return annotation to suppress this message\.$%
 %^Method "PhpParser\\NodeVisitor\:\:leaveNode\(\)" might add "int\|Node\|array\|null" as a native return type declaration in the future\. Do the same in implementation "PhpParser\\NodeVisitorAbstract@anonymous" now to avoid errors or add an explicit @return annotation to suppress this message\.$%
