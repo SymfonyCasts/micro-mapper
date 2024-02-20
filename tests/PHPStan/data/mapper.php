@@ -16,10 +16,10 @@ use function PHPStan\Testing\assertType;
 
 function doMapperInterfaceLoad(MapperInterface $microMapper): void
 {
-    assertType(DinosaurDto::class, $microMapper->load(new \stdClass(), DinosaurDto::class));
+    assertType(DinosaurDto::class, $microMapper->load(new stdClass(), DinosaurDto::class));
 }
 
 function doMapperInterfacePopulate(MapperInterface $microMapper, DinosaurDto $dto): void
 {
-    assertType(DinosaurDto::class, $microMapper->populate(new \stdClass(), $dto));
+    assertType(DinosaurDto::class, $microMapper->populate(new stdClass(), $dto));
 }
