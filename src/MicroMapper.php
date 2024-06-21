@@ -84,4 +84,15 @@ class MicroMapper implements MicroMapperInterface
 
         throw new \Exception(sprintf('No mapper found for %s -> %s', $from::class, $toClass));
     }
+
+    public function mapMultiple(iterable $fromIterable, string $toClass, array $context = []): array
+    {
+        $toObjects = [];
+
+        foreach ($fromIterable as $from) {
+            $toObjects[] = $this->map($from, $toClass, $context);
+        }
+
+        return $toObjects;
+    }
 }
