@@ -24,4 +24,13 @@ interface MicroMapperInterface
      * @return TTo
      */
     public function map(object $from, string $toClass, array $context = []): object;
+
+    /**
+     * @template TTo of object
+     *
+     * @param class-string<TTo> $toClass
+     *
+     * @return list<TTo>
+     */
+    public function mapMultiple(iterable $fromIterable, string $toClass, array $context = []): array;
 }

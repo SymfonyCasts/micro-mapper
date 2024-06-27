@@ -42,17 +42,25 @@ class MicroMapperTest extends TestCase
         $this->assertSame('North America', $dto->name);
         $this->assertSame('temperate', $dto->climate);
         $this->assertCount(2, $dto->dinosaursMappedShallow);
+        $this->assertCount(2, $dto->dinosaursMultiMappedShallow);
         $this->assertCount(2, $dto->dinosaursMappedDeep);
+        $this->assertCount(2, $dto->dinosaursMultiMappedDeep);
 
         // id is mapped for both deep and shallow
         $this->assertSame(3, $dto->dinosaursMappedShallow[0]->id);
+        $this->assertSame(3, $dto->dinosaursMultiMappedShallow[0]->id);
         $this->assertSame(3, $dto->dinosaursMappedDeep[0]->id);
+        $this->assertSame(3, $dto->dinosaursMultiMappedDeep[0]->id);
         // further properties are only in the deep
         $this->assertNull($dto->dinosaursMappedShallow[0]->genus);
+        $this->assertNull($dto->dinosaursMultiMappedShallow[0]->genus);
         $this->assertSame('Velociraptor', $dto->dinosaursMappedDeep[0]->genus);
+        $this->assertSame('Velociraptor', $dto->dinosaursMultiMappedDeep[0]->genus);
         // the deep will have a region, but it will be shallow
         $this->assertSame($dto->dinosaursMappedDeep[0]->region->id, 1);
+        $this->assertSame($dto->dinosaursMultiMappedDeep[0]->region->id, 1);
         $this->assertNull($dto->dinosaursMappedDeep[0]->region->name);
+        $this->assertNull($dto->dinosaursMultiMappedDeep[0]->region->name);
 
         $reflectionObject = new \ReflectionObject($mapper);
         $objectHashesProperty = $reflectionObject->getProperty('objectHashes');
