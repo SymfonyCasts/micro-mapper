@@ -22,4 +22,12 @@ class DinoRegionDto
      * @var array DinosaurDto[]
      */
     public array $dinosaursMappedDeep = [];
+    /**
+     * @var array DinosaurDto[]
+     */
+    public array $dinosaursMultiMappedShallow = [];
+    /**
+     * @var array DinosaurDto[]
+     */
+    public array $dinosaursMultiMappedDeep = [];
 }

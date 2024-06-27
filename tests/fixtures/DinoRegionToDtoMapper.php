@@ -43,6 +43,10 @@ class DinoRegionToDtoMapper implements MapperInterface
         }
         $to->dinosaursMappedShallow = $shallowDinosaurDtos;
 
+        $to->dinosaursMultiMappedShallow = $this->microMapper->mapMultiple($from->dinosaurs, DinosaurDto::class, [
+            MicroMapperInterface::MAX_DEPTH => 0,
+        ]);
+
         $deepDinosaurDtos = [];
         foreach ($from->dinosaurs as $dino) {
             $deepDinosaurDtos[] = $this->microMapper->map($dino, DinosaurDto::class, [
@@ -50,6 +54,10 @@ class DinoRegionToDtoMapper implements MapperInterface
             ]);
         }
         $to->dinosaursMappedDeep = $deepDinosaurDtos;
+
+        $to->dinosaursMultiMappedDeep = $this->microMapper->mapMultiple($from->dinosaurs, DinosaurDto::class, [
+            MicroMapperInterface::MAX_DEPTH => 1,
+        ]);
 
         return $to;
     }
