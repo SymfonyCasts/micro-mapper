@@ -54,7 +54,7 @@ class MicroMapper implements MicroMapperInterface
         // if we are not fully populating, this is already the final depth/level
         // through the micro mapper.
         if (isset($this->objectHashes[spl_object_hash($from)]) && $shouldFullyPopulate) {
-            throw new \Exception(sprintf('Circular reference detected with micro mapper: %s. Try passing [MicroMapperInterface::MAX_DEPTH => 1] when mapping relationships.', implode(' -> ', array_merge($this->objectHashes, [$from::class]))));
+            throw new \Exception(\sprintf('Circular reference detected with micro mapper: %s. Try passing [MicroMapperInterface::MAX_DEPTH => 1] when mapping relationships.', implode(' -> ', array_merge($this->objectHashes, [$from::class]))));
         }
 
         $this->objectHashes[spl_object_hash($from)] = $from::class;
@@ -82,7 +82,7 @@ class MicroMapper implements MicroMapperInterface
         $this->currentDepth = 0;
         $this->maxDepth = null;
 
-        throw new \Exception(sprintf('No mapper found for %s -> %s', $from::class, $toClass));
+        throw new \Exception(\sprintf('No mapper found for %s -> %s', $from::class, $toClass));
     }
 
     public function mapMultiple(iterable $fromIterable, string $toClass, array $context = []): array
