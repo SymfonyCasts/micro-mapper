@@ -17,7 +17,7 @@ class MapperConfig
     public function __construct(
         private string $fromClass,
         private string $toClass,
-        private \Closure $mapper
+        private \Closure $mapper,
     ) {
     }
 
