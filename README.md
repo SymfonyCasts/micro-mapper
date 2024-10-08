@@ -1,5 +1,7 @@
 # MicroMapper: The Tiny, Underwhelming Data Mapper for Symfony!
 
+[![CI](https://github.com/SymfonyCasts/micro-mapper/actions/workflows/ci.yaml/badge.svg)](https://github.com/SymfonyCasts/micro-mapper/actions/workflows/ci.yaml)
+
 Need to map one object (e.g. a Doctrine entity) to another
 object (e.g. a DTO) and *love* writing the mapping code manually?
 Then this library is for you!
