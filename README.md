@@ -43,7 +43,7 @@ $dragonDTO = $microMapper->map($dragon, DragonDTO::class);
 ```
 
 MicroMapper is similar to other data mappers, like
-[jane-php/automapper](https://github.com/janephp/automapper), except... less
+[jolicode/automapper](https://github.com/jolicode/automapper), except... less
 impressive! Jane's Automapper is awesome and handles a lot of heavy lifting.
 With MicroMapper, *you* do the heavy lifting. Let's review with a table!
 
