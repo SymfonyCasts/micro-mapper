@@ -73,12 +73,12 @@ class MicroMapperTest extends TestCase
         $microMapper->addMapperConfig(new MapperConfig(
             DinoRegion::class,
             DinoRegionDto::class,
-            fn () => new DinoRegionToDtoMapper($microMapper)
+            static fn () => new DinoRegionToDtoMapper($microMapper)
         ));
         $microMapper->addMapperConfig(new MapperConfig(
             Dinosaur::class,
             DinosaurDto::class,
-            fn () => new DinosaurToDtoMapper($microMapper)
+            static fn () => new DinosaurToDtoMapper($microMapper)
         ));
 
         return $microMapper;

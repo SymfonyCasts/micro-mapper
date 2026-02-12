@@ -37,7 +37,7 @@ class MapperConfigTest extends TestCase
         $config = new MapperConfig(
             fromClass: DinoRegion::class,
             toClass: DinoRegionDto::class,
-            mapper: fn () => $mockMapper,
+            mapper: static fn () => $mockMapper,
         );
 
         $this->assertSame($mockMapper, $config->getMapper());
