@@ -64,7 +64,7 @@ class MicroMapper implements MicroMapperInterface
                 continue;
             }
 
-            $toObject = $mapperConfig->getMapper()->load($from, $toClass, $context);
+            $toObject = $mapperConfig->getMapper()->load($from, $context);
 
             // avoid fully populated objects if max depth is reached
             if (null === $this->maxDepth || $this->currentDepth < $this->maxDepth) {

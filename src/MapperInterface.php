@@ -15,6 +15,9 @@ namespace Symfonycasts\MicroMapper;
  * Also add #[AsMapper(from: Foo:class, to: Bar:class)] to each mapper class.
  *
  * @author Ryan Weaver <ryan@symfonycasts.com>
+ *
+ * @template TFrom of object
+ * @template TTo of object
  */
 interface MapperInterface
 {
@@ -24,22 +27,21 @@ interface MapperInterface
      * This method should load (e.g. from the database) or instantiate the "to object".
      * Avoid populating any properties except for an identifier.
      *
-     * @template TTo of object
-     *
-     * @param class-string<TTo> $toClass
+     * @param TFrom        $from
+     * @param array<mixed> $context
      *
      * @return TTo
      */
-    public function load(object $from, string $toClass, array $context): object;
+    public function load(object $from, array $context): object;
 
     /**
      * Populate the data onto the "to object" from the "from object".
      *
      * Receives the "to object" returned from load().
      *
-     * @template TTo of object
-     *
-     * @param TTo $to
+     * @param TFrom        $from
+     * @param TTo          $to
+     * @param array<mixed> $context
      *
      * @return TTo
      */

@@ -13,6 +13,7 @@ use Symfonycasts\MicroMapper\AsMapper;
 use Symfonycasts\MicroMapper\MapperInterface;
 use Symfonycasts\MicroMapper\MicroMapperInterface;
 
+/** @implements MapperInterface<Dinosaur, DinosaurDto> */
 #[AsMapper(from: Dinosaur::class, to: DinosaurDto::class)]
 class DinosaurToDtoMapper implements MapperInterface
 {
@@ -20,9 +21,9 @@ class DinosaurToDtoMapper implements MapperInterface
     {
     }
 
-    public function load(object $from, string $toClass, array $context): object
+    public function load(object $from, array $context): object
     {
-        $dto = new $toClass();
+        $dto = new DinosaurDto();
         $dto->id = $from->id;
 
         return $dto;
@@ -30,9 +31,6 @@ class DinosaurToDtoMapper implements MapperInterface
 
     public function populate(object $from, object $to, array $context): object
     {
-        \assert($from instanceof Dinosaur);
-        \assert($to instanceof DinosaurDto);
-
         $to->genus = $from->genus;
         $to->species = $from->species;
         $to->region = $this->microMapper->map($from->region, DinoRegionDto::class, [
